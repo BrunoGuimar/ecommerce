@@ -6,6 +6,7 @@ import demo.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> criarPedido(@RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> criarPedido(@Validated @RequestBody Pedido pedido) {
         Pedido novoPedido = service.salvarPedido(pedido);
         return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
     }
@@ -46,7 +47,7 @@ public class PedidoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> atualizarPedido(@PathVariable String id, @RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> atualizarPedido(@PathVariable String id, @Validated @RequestBody Pedido pedido) {
         Pedido pedidoExistente = service.buscarPedidoPorId(id);
         if (pedidoExistente != null) {
             pedido.setId(id);
